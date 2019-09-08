@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
+import { Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import routes from "./routes/routes";
+
+import { NavLink } from "react-router-dom";
+
+import Home from "./Pages/Home/Home";
+import Authors from "./Pages/Authors/Authors";
 
 class App extends Component {
   state = {
@@ -25,23 +32,38 @@ class App extends Component {
           <Collapse isOpen={isNavOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <a className="nav-link" activeClassName="active" href={"home"}>
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to={routes.home}
+                >
                   Home
-                </a>
+                </NavLink>
               </NavItem>
               <NavItem>
-                <a className="nav-link" activeClassName="active" href={"home"}>
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to={routes.authors}
+                >
                   Authors
-                </a>
+                </NavLink>
               </NavItem>
               <NavItem>
-                <a className="nav-link" activeClassName="active" href={"home"}>
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to={routes.newPost}
+                >
                   New Post
-                </a>
+                </NavLink>
               </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
+
+        <Route exact path={routes.home} component={Home} />
+        <Route exact path={routes.authors} component={Authors} />
       </div>
     );
   }
