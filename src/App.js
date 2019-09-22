@@ -4,10 +4,12 @@ import { Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import routes from "./routes/routes";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
 import Home from "./Pages/Home/Home";
 import Authors from "./Pages/Authors/Authors";
+import Post from "./Pages/Post/Post";
+import Author from "./Pages/Author/Author";
 
 class App extends Component {
   state = {
@@ -20,6 +22,14 @@ class App extends Component {
     });
   };
 
+  componentDidMount() {
+    /* withRouter HOC having three props : history, location, match */
+    const { history, location } = this.props;
+    if (location.pathname === "/") {
+      history.push(routes.home);
+    }
+  }
+
   render() {
     const { isNavOpen } = this.state;
     return (
@@ -30,7 +40,7 @@ class App extends Component {
             Blog
           </a>
           <Collapse isOpen={isNavOpen} navbar>
-            <Nav className="ml-auto" navbar>
+            <NavLink className="ml-auto" navbar>
               <NavItem>
                 <NavLink
                   className="nav-link"
@@ -58,15 +68,17 @@ class App extends Component {
                   New Post
                 </NavLink>
               </NavItem>
-            </Nav>
+            </NavLink>
           </Collapse>
         </Navbar>
 
         <Route exact path={routes.home} component={Home} />
+        <Route path={routes.post} component={Post} />
+        <Route path={routes.author} component={Author} />
         <Route exact path={routes.authors} component={Authors} />
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
